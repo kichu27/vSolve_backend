@@ -10,6 +10,7 @@ const OTPAuthenticationSchema = new Schema({
     expireTime: { type: Date },
     verificationTime: { type: Date },
     verificationAttempts: { type: Number, default: 0 },
+    otpType :  { type: String} ,
     status: { type: String, enum: ['sent', 'verified', 'expired', 'failed'], default: "sent" }
 }, { timestamps: true, collection: '_otpAuthentication' });
 

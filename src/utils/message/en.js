@@ -8,6 +8,11 @@ const en = {
     "0007" : "Invalid lead status." ,
     "0010": "Request Sent Successfully",
     "0011": "Lead Updated Successfully",
+    "0012": "Access Code Invalid",
+    "0013": "Access Code Expired",
+    "0014" : "Access Code Accepted"
+
+
 
   };
   

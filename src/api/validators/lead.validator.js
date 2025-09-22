@@ -11,6 +11,14 @@ export function validateCreateLeadAndAccessRequest(body) {
   return schema.validate(body);
 }
 
+export function validateApproveLeadAccessCode(body) {
+  const schema = Joi.object({
+    accessCode: Joi.string().required().length(8),
+  });
+
+  return schema.validate(body);
+}
+
 export function validateUpdateLeadAndAccessRequest(body) {
   const schema = Joi.object({
     _id: Joi.string()
