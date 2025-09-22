@@ -6,7 +6,9 @@ const en = {
     "0005" : "You can only re-apply 2 days after rejection." ,
     "0006" : "Lead has been blocked." ,
     "0007" : "Invalid lead status." ,
-    "0010": "Request Sent Successfully"
+    "0010": "Request Sent Successfully",
+    "0011": "Lead Updated Successfully",
+
   };
   
   export default en;

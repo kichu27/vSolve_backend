@@ -26,8 +26,8 @@ export default async (req, res) => {
           return res.status(400).json(generateResponse("0004", {error: "Lead request is still pending."}));
 
         case "REJECTED":
-          // Check if 2 days have passed since last response
           const lastUpdated = await getLastResponseDate(value.email);
+
           const now = new Date();
           const diffInMs = now - lastUpdated;
           const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
