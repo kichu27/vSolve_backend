@@ -1,8 +1,8 @@
 import { Router } from "express";
-import {createLead} from "../controllers/leadController/index.js";
+import {createLeadAndAccessRequest} from "../controllers/leadController/index.js";
 
 const router = Router();
 
-router.post("/createLead",createLead);
-
+router.post("/submitAccessRequestForm", createLeadAndAccessRequest);
+  
 export default router;

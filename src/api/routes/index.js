@@ -2,7 +2,6 @@ import { Router } from 'express';
 import leads from './leadRoutes.js';
 
 const router = Router();
-
-router.use('/accesscontrollist' , leads)
+router.use('/lead', leads);
 
 export default router;

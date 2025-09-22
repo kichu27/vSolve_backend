@@ -1,1 +1,1 @@
-export { default as createLead } from './createLead.js'
+export { default as createLeadAndAccessRequest } from './createLeadAndAccessRequest.js'
