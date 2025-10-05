@@ -10,7 +10,9 @@ const en = {
     "0011": "Lead Updated Successfully",
     "0012": "Access Code Invalid",
     "0013": "Access Code Expired",
-    "0014" : "Access Code Accepted"
+    "0014" : "Access Code Accepted",
+    "0015" : "Access Code Sent Successfully Via Mail"
+
 
 
 

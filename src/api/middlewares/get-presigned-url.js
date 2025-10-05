@@ -4,7 +4,6 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 export default async (key) => {
     try {
-        // console.log(req.body)
         const s3 = new S3Client({
             region: awsRegion,
             credentials: {

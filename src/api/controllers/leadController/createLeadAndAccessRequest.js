@@ -4,6 +4,8 @@ import createAccessRequestUserResponse from "../../services/accessRequestQuestio
 import createLead from "../../services/leadServices/createLead.js";
 import leadExists from "../../services/leadServices/leadExists.js";
 import getLastResponseDate from "../../services/accessRequestQuestionResponseServices/getLastResponseDate.js"
+import computeMicroscoreFromForm1 from "../../services/microScoreServices/computeMicroscoreFromAccessRequestForm.js"
+import sendStatusWiseEmail from "../../services/accessRequestQuestionResponseServices/sendStatusWiseEmail.js"
 
 export default async (req, res) => {
   try {
@@ -14,6 +16,9 @@ export default async (req, res) => {
     }
 
     const { exists, data: existingLead } = await leadExists(value.email);
+
+    const ip = req.ip || req.connection.remoteAddress;
+    value.userIP = ip ; 
 
     if (exists) {
 
@@ -49,13 +54,39 @@ export default async (req, res) => {
       }
     }
 
+    let score  = await computeMicroscoreFromForm1(value);
+    value.microScore = score ;
+
+    if(score.flags.risk_email_disposable){
+      value.queueTag = "review_strict"
+    }
+
+    if(score.score >= 4 && score.score <= 6 ){
+value.queueTag = "review_light"
+    }
+
+    if(score.score <= 3 ){
+      value.queueTag = "review_strict"
+      }
+
+      if(!score.flags.risk_email_disposable && score.score >= 9){
+        value.queueTag = "fast_track",
+        value.status = "ACTIVE" 
+      }
+
     // If lead doesn't exist, create new lead
     const lead = await createLead(value);
-    const { _id } = lead;
+    const { _id , email , status} = lead;
+
 
     await createAccessRequestUserResponse(_id, value.questionResponse);
 
-    return res.status(200).json(generateResponse("0010", { lead }));
+    if(status == "ACTIVE"){
+      await sendStatusWiseEmail({_id ,email ,status });
+      return res.status(200).json(generateResponse("0015"));
+    }
+
+    return res.status(200).json(generateResponse("0010"));
 
   } catch (exception) {
     return res

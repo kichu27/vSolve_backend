@@ -8,13 +8,11 @@ export default async function validateAccessCode({ accessCode }) {
     err.status = 400;
     throw err;
   }
-console.log(accessCode)
   const record = await otpAuthentication.findOne({
     otpCode: accessCode,
     otpType: "LEAD_EXP",
   });
 
-  console.log(record)
 
   if (!record) {
     const err = new Error("Access code is invalid");
