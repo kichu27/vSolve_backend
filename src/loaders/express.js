@@ -7,13 +7,26 @@ import { prefix } from './../config/index.js';
 import routes from './../api/routes/index.js';
 import { jwtSecretKey } from '../config/index.js';
 import bodyParser from 'body-parser';
+import rateLimit from 'express-rate-limit';
 
 export default (app) => {
   if (!jwtSecretKey) {
     process.exit(1);
   }
 
-  app.enable('trust proxy');
+  const ipRateLimiter = rateLimit({
+    windowMs: 10 * 60 * 1000,
+    max: 20,
+    message: {
+      message: "Too many requests. Please try again after 10 minutes.",
+      data: {"error" :"RATE_LIMIT"},
+    },
+    standardHeaders: true, 
+    legacyHeaders: false,
+  });
+  
+  app.use(ipRateLimiter);
+
   app.use(cors());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());

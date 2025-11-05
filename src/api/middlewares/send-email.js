@@ -9,7 +9,7 @@ export default async (toEmail, subject, htmlContent, fileUrl = null ,fileName = 
 
     const userEmail = "kartikpatekar27@gmail.com";
     const passEmail = "gkbl pcag mggy rehp";
-    const fromEmail = "kartikpatekar27@gmail.com";
+    const fromEmail = "access@vsolvegroup.com";
 
     if (!toEmail || !subject || !htmlContent) {
       return {

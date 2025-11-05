@@ -20,17 +20,20 @@ export default async function sendStatusWiseEmail({ _id ,email, status }) {
     let subject, htmlContent;
 
     if (status === "ACTIVE") {
-      subject = "Your Access Has Been Granted - VSOLVE";
+      subject = "Your VSOLVE Access Code";
       const accessCode = generateSecureAccessCode(8); // 7-char secure code
       const expiryDate = new Date(Date.now() + 48 * 60 * 60 * 1000);
 
       htmlContent = `
-        <h2>Congratulations!</h2>
-        <p>Your access request has been <b>approved</b>.</p>
-        <p>Here is your <b>Access Code</b>: <strong>${accessCode}</strong></p>
-        <p>This code is valid for <b>48 hours</b>. Do not share this code with anyone.</p>
-        <p>Welcome aboard,<br/>Team VSOLVE</p>
-      `;
+      <p>Hi ${""},</p>
+      <p>Here's your one-time <strong>VSOLVE access code</strong>:</p>
+      <h2 style="color:#2d6cdf;">${accessCode}</h2>
+      <p><strong>Valid for:</strong> 48 hours</p>
+      <p>Use it to enter the private area and book a diagnostic conversation.</p>
+      <p>If you didn't request this, ignore this email. The code will expire automatically.</p>
+      <br/>
+      <p>— <strong>VSOLVE</strong></p>
+    `;
 
       await sendExpiryAccessOtp({_id  , email , accessCode , expiryDate} )
 
